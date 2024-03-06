@@ -134,7 +134,8 @@ fi
 
 # Delete files not present at the source
 if [ "${INPUT_DELETE}" = "true" ]; then
-  MIRROR_COMMAND="${MIRROR_COMMAND} --delete"
+  # MIRROR_COMMAND="${MIRROR_COMMAND} --delete"
+  MIRROR_COMMAND="${MIRROR_COMMAND} --delete-first"
 fi
 
 # ------------------------------------------------------------------------------
