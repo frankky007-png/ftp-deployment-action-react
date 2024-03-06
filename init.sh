@@ -173,8 +173,8 @@ while true; do
   lftp \
     -u "${INPUT_USER}","${INPUT_PASSWORD}" \
     "${INPUT_SERVER}" \
-    -c "rmdir assets"
-    -c "rmdir image"
+    -e "rmdir assets"
+    -e "rmdir image"
     -e "${FTP_SETTINGS} ${MIRROR_COMMAND} ${INPUT_LOCAL_DIR} ${INPUT_REMOTE_DIR}; quit;" &&
     SUCCESS="true"
 
