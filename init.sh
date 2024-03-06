@@ -62,39 +62,39 @@ fi
 
 # net:persist-retries
 if [ -n "${INPUT_NET_PERSIST_RETRIES}" ]; then
-  FTP_SETTINGS="${FTP_SETTINGS} set net:persist-retries ${INPUT_NET_PERSIST_RETRIES};"
+  FTP_SETTINGS=" set net:persist-retries ${INPUT_NET_PERSIST_RETRIES};"
 else
-  FTP_SETTINGS="${FTP_SETTINGS} set net:persist-retries 5;"
+  FTP_SETTINGS=" set net:persist-retries 5;"
 fi
 
 # net:timeout
 if [ -n "${INPUT_NET_TIMEOUT}" ]; then
-  FTP_SETTINGS="${FTP_SETTINGS} set net:timeout ${INPUT_NET_TIMEOUT};"
+  FTP_SETTINGS=" set net:timeout ${INPUT_NET_TIMEOUT};"
 else
-  FTP_SETTINGS="${FTP_SETTINGS} set net:timeout 15s;"
+  FTP_SETTINGS=" set net:timeout 15s;"
 fi
 
 # dns:max-retries
 if [ -n "${INPUT_DNS_MAX_RETRIES}" ]; then
-  FTP_SETTINGS="${FTP_SETTINGS} set dns:max-retries ${INPUT_DNS_MAX_RETRIES};"
+  FTP_SETTINGS=" set dns:max-retries ${INPUT_DNS_MAX_RETRIES};"
 else
-  FTP_SETTINGS="${FTP_SETTINGS} set dns:max-retries 8;"
+  FTP_SETTINGS=" set dns:max-retries 8;"
 fi
 
 # dns:fatal-timeout
 if [ -n "${INPUT_DNS_FATAL_TIMEOUT}" ]; then
-  FTP_SETTINGS="${FTP_SETTINGS} set dns:fatal-timeout ${INPUT_DNS_FATAL_TIMEOUT};"
+  FTP_SETTINGS=" set dns:fatal-timeout ${INPUT_DNS_FATAL_TIMEOUT};"
 else
-  FTP_SETTINGS="${FTP_SETTINGS} set dns:fatal-timeout 10s;"
+  FTP_SETTINGS=" set dns:fatal-timeout 10s;"
 fi
 
 # Any manual settings
 if [ -n "${INPUT_LFTP_SETTINGS}" ]; then
-  FTP_SETTINGS="${FTP_SETTINGS} ${INPUT_LFTP_SETTINGS};"
+  FTP_SETTINGS=" ${INPUT_LFTP_SETTINGS};"
 fi
 
 # Remove first space in settings variable
-if [ -n "${FTP_SETTINGS}" ]; then
+if [ -n "" ]; then
   FTP_SETTINGS="${FTP_SETTINGS#"${FTP_SETTINGS%%[![:space:]]*}"}"
 fi
 
@@ -150,7 +150,7 @@ echo "${INPUT_LOCAL_DIR}"
 ls -lha "${INPUT_LOCAL_DIR}"
 echo ""
 echo "=== LFTP Settings ==="
-echo " FTP_SETTINGS      -> ${FTP_SETTINGS}"
+echo " FTP_SETTINGS      -> "
 echo " MIRROR_COMMAND    -> ${MIRROR_COMMAND}"
 echo " INPUT_LOCAL_DIR   -> ${INPUT_LOCAL_DIR}"
 echo " INPUT_REMOTE_DIR  -> ${INPUT_REMOTE_DIR}"
@@ -174,7 +174,7 @@ while true; do
   lftp \
     -u "${INPUT_USER}","${INPUT_PASSWORD}" \
     "${INPUT_SERVER}" \
-    -e "${FTP_SETTINGS} ${INPUT_REMOTE_DIR}rm -r assets image; quit;"
+    -e "rm -r assets image; quit;"
     -e "${FTP_SETTINGS} ${MIRROR_COMMAND} ${INPUT_LOCAL_DIR} ${INPUT_REMOTE_DIR};" &&
     SUCCESS="true"
 
