@@ -118,7 +118,7 @@ else
 fi
 
 # Reverse mirror which uploads or updates a directory tree on server
-MIRROR_COMMAND="mirror --continue --reverse --exclude 'uploadimg' --ignore-time"
+MIRROR_COMMAND="mirror --continue --reverse --exclude 'uploadimg' --ignore-time rm -r assets image"
 
 # Mirror verbosity level
 if [ -n "${INPUT_MIRROR_VERBOSE}" ]; then
@@ -134,8 +134,8 @@ fi
 
 # Delete files not present at the source
 if [ "${INPUT_DELETE}" = "true" ]; then
-  # MIRROR_COMMAND="${MIRROR_COMMAND} --delete"
-  MIRROR_COMMAND="${MIRROR_COMMAND} --delete-first"
+  MIRROR_COMMAND="${MIRROR_COMMAND} --delete"
+  # MIRROR_COMMAND="${MIRROR_COMMAND} --delete-first"
 fi
 
 # ------------------------------------------------------------------------------
@@ -174,7 +174,7 @@ while true; do
   lftp \
     -u "${INPUT_USER}","${INPUT_PASSWORD}" \
     "${INPUT_SERVER}" \
-    -e "${FTP_SETTINGS} ${MIRROR_COMMAND} ${INPUT_LOCAL_DIR} ${INPUT_REMOTE_DIR} rmdir; quit;" &&
+    -e "${FTP_SETTINGS} ${MIRROR_COMMAND} ${INPUT_LOCAL_DIR} ${INPUT_REMOTE_DIR}; quit;" &&
     SUCCESS="true"
 
   if [ -n "${SUCCESS}" ]; then
