@@ -118,7 +118,7 @@ else
 fi
 
 # Reverse mirror which uploads or updates a directory tree on server
-MIRROR_COMMAND="mirror --continue --reverse"
+MIRROR_COMMAND="mirror --continue --reverse --exclude 'uploadimg' --ignore-time"
 
 # Mirror verbosity level
 if [ -n "${INPUT_MIRROR_VERBOSE}" ]; then
@@ -174,7 +174,7 @@ while true; do
   lftp \
     -u "${INPUT_USER}","${INPUT_PASSWORD}" \
     "${INPUT_SERVER}" \
-    -e "${FTP_SETTINGS} rmdir assets ${MIRROR_COMMAND} ${INPUT_LOCAL_DIR} ${INPUT_REMOTE_DIR}; quit;" &&
+    -e "${FTP_SETTINGS} ${MIRROR_COMMAND} ${INPUT_LOCAL_DIR} ${INPUT_REMOTE_DIR} rmdir; quit;" &&
     SUCCESS="true"
 
   if [ -n "${SUCCESS}" ]; then
